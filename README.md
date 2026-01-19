@@ -1,4 +1,2 @@
-# final-eaxm-project
-# makeup-website-final
-# makeup-website-final
-# makeup-website-final
+# Makeup website
+This a makeup website
