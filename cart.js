@@ -206,7 +206,7 @@ function nextFunction() {
 function forwardFunction() {
   var mascaraBrand = document.getElementById("mascara").value;
   if (mascaraBrand == "revlon") {
-    price = "$547";
+    price = "$60";
     description = "This a premium brand";
 
   } else if (mascaraBrand == "mac") {
@@ -238,8 +238,9 @@ function validateForm() {
 
 // this function is for validating the payment form
 function validatePaymentForm() {
-  var visa = document.getElementById("visa").value;
-  var master = document.getElementById("master").value;
+  var visa = document.getElementById("visa").checked; // Use .checked for radio buttons
+  var master = document.getElementById("master").checked;
+  var cardNum = document.getElementById("cardNumber").value;
   var month = document.getElementById("month").value;
   var cardName1 = document.getElementById("cardnameN1").value;
   var cardName2 = document.getElementById("cardnameN2").value;
@@ -247,24 +248,39 @@ function validatePaymentForm() {
   var year = document.getElementById("year").value;
   var cvv = document.getElementById("cvvf").value;
 
-  // this condition is for checking if the fields are empty
-  if (visa == "" || master == "" || month == "" || year == "" || cvv == "") {
-
-
-
+  // 1. First, check if anything is empty
+  if ((!visa && !master) || cardNum == "" || month == "" || year == "" || cvv == "") {
     alert("fill details");
   } else {
-    
+    if (!/^\d+$/.test(cardNum)) {
+      alert("Card number must contain only numbers (no letters or symbols).");
+      return;
+    }
+    // 2. ADD THE CARD NUMBER LENGTH CHECK HERE
+    if (cardNum.replace(/\s/g, '').length < 16) {
+      alert("Card number must be 16 digits");
+      return; // Stop the function here if the card is too short
+    }
+    var nameRegex = /^[A-Za-z]+$/;
+    if (!nameRegex.test(cardName1) || (cardName2 !== "" && !nameRegex.test(cardName2)) || !nameRegex.test(cardName3)) {
+    alert("Names must contain only letters (no numbers or symbols).");
+    return;
+    }
+    // 5. CVV: MUST be numerals only
+    if (!/^\d{3}$/.test(cvv)) {
+    alert("CVV must be exactly 3 numbers.");
+    return;
+    }
 
-    if(cvv >= 100 & cvv <= 999){
-      // alert("form is filled");
-      // this part is for calculating the total cost including delivery
+    // 3. Now check CVV length
+    if(cvv >= 100 && cvv <= 999) {
       var cost_form = document.getElementById("costForm");
       cost_form.style.display = "block";
+      
+      // 4. Calculate total cost, delivery cost, and net total
       totalCst = document.getElementById("amount").textContent;
-  
       document.getElementById("total-cost").innerHTML = totalCst;
-      // this part is for calculating delivery cost
+      // Delivery cost calculation
       if (parseFloat(totalCst) < 1000) {
         deliveryC = parseFloat(totalCst) * 0.1;
         netTotal = parseFloat(totalCst) + deliveryC;
@@ -276,10 +292,12 @@ function validatePaymentForm() {
         document.getElementById("delivery-cost").innerHTML = deliveryC.toFixed(2);
         document.getElementById("net-total").innerHTML = netTotal.toFixed(2);
       }
+      // 5. Confirm payment after a short delay
       setTimeout(() => {
         confirmPayment();
       }, 1000);
-    }else{
+      
+    } else {
       alert("CVV can only be 3 digits");
     }
   }

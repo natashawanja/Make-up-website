@@ -9,7 +9,7 @@ body, html {
   }
   .topnav {
     overflow: hidden;
-    background-color: rgb(223, 191, 177);
+    background-color: rgb(237, 200, 184);
   }
   .topnav a {
     float: left;
@@ -77,16 +77,44 @@ body, html {
     margin-right: 1%;
     height: 600px
   }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;           /* Adds space between cards */
+    padding: 20px;
+  }
   .column {
-    float: left;
-    width: 20%;
-    margin-bottom: 16px;
-    padding: 0 8px;
+    flex: 0 1 250px;     /* Allows cards to be a consistent width */
+  margin-bottom: 20px;
   }
   
   .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
   }
+  .card:hover {
+    transform: translateY(-10px); /* Lifts the card when hovered */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  }
+  .card img {
+    width: 100%;
+    height: 250px;       /* Set a reasonable, consistent height */
+    object-fit: contain; /* This prevents stretching and shows the full product */
+    padding: 20px;       /* Gives the product some breathing room */
+    background-color: #fff; 
+  }
+  .product-img {
+    width: 100%;
+    height: 300px;       /* Set a fixed height that looks good for all products */
+    object-fit: contain; /* THIS FIXES STRETCHING: it keeps the original proportions */
+    padding: 15px;       /* Adds space so the product doesn't touch the card edges */
+    background-color: #fff; /* Ensures a clean look behind transparent products */
+}
   
   .container {
     padding: 0 16px;
@@ -178,6 +206,7 @@ body, html {
   float: right;
 }
 
+
 .card-type-selector {
   display: flex;
   justify-content: space-between;
@@ -242,4 +271,195 @@ body, html {
 
 #month, #year{
   width: 100px;
+}
+.basket-wrapper {
+  margin-top: 50px;
+  padding-bottom: 100px;
+}
+
+.section-title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+.basket-layout {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.payment-section {
+  flex: 2;
+  min-width: 350px;
+}
+
+.summary-section {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Form Styling */
+.modern-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.card-name-inputs, .date-selects {
+  display: flex;
+  gap: 10px;
+}
+
+.modern-form input, .modern-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+/* Summary Card */
+.summary-card {
+  background: #fdf6f9; /* Soft blush background */
+  padding: 25px;
+  border-radius: 15px;
+  position: sticky;
+  top: 100px;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.summary-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.total-row {
+  font-size: 18px;
+  color: #d63384; /* Deep pink color */
+}
+
+/* Buttons */
+.btn-checkout {
+  width: 100%;
+  background: #333;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-checkout:hover {
+  background: #eccbe0;
+  color: #333;
+}
+
+.btn-clear {
+  width: 100%;
+  background: none;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  color: #999;
+}
+/* This forces the two sections to sit side-by-side */
+.basket-flex-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 10%;
+  background-color: #fdf6f9; /* Light blush background for the whole section */
+}
+
+/* Override your old fixed widths and floats */
+#pay-details-cont, #cost-container {
+  float: none !important; /* Removes the old float: right */
+  width: 100% !important;
+  max-width: 500px !important; /* Limits size on big screens */
+  background: white;
+  padding: 30px !important;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  border: none !important;
+}
+
+/* Make your inputs look more modern */
+#payForm input[type="text"], #month, #year, #cvvf {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/* Style the buttons to look like a real shop */
+#check-clear, button[onclick="validatePaymentForm()"] {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+button[onclick="validatePaymentForm()"] {
+  background-color: #333;
+  color: white;
+}
+
+button[onclick="validatePaymentForm()"]:hover {
+  background-color: #eccbe0;
+  color: #333;
+}
+
+#check-clear {
+  background-color: #eee;
+  color: #777;
+}
+/* This is the magic fix to put them side-by-side */
+.side-by-side-container {
+  display: flex !important;
+  flex-direction: row !important; /* Forces horizontal alignment */
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 40px !important; /* Space between the two boxes */
+  margin: 40px auto !important;
+  max-width: 1200px !important;
+  padding: 20px !important;
+}
+
+/* Ensure each section takes up equal width and stops floating */
+#pay-details-cont, #cost-container {
+  flex: 1 !important; /* Makes both boxes equal width */
+  float: none !important; /* Removes old float: right/left */
+  margin: 0 !important;
+  min-width: 350px !important; /* Prevents them from getting too squished */
+  background: #ffffff !important;
+  border-radius: 15px !important;
+  padding: 30px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+}
+
+/* Hide the 'BASKET' text if it's getting in the way of the alignment */
+.side-by-side-container h2 {
+  width: 100%;
+  text-align: center;
 }

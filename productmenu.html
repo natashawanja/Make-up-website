@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Menu</title>
   <link rel="stylesheet" type="text/css" href="shopping.css">
   <link rel="stylesheet" href="home.css">
@@ -20,10 +21,10 @@
     <div class="nav">
         <img src="images/makeuplogo.png" alt="" style="padding-right: 15%;">
         <div class="nav-items">
-            <a href="index.html"><img src="images/homepagelogo.png" alt=""></a>
+            <a href="index.html"><img src="images/home3.png" alt=""></a>
             <a href="items.html"><img src="images/product.png" alt=""></a>
-            <a href="productmenu.html"><img src="images/cartlogo.png" alt=""></a>
-            <a href="contactus.html"><img src="images/contact.png" alt=""></a>
+            <a href="productmenu.html"><img src="images/carts.png" alt=""></a>
+            <a href="contactus.html"><img src="images/email.png" alt=""></a>
         </div>
     </div>
   </nav>
@@ -37,7 +38,7 @@
     <div class="row">
       <div class="column">
         <div class="card">
-          <img src="images/mkup5.jpg" alt="makeup" style="width:100%" height="400px">
+          <img src="images/eyeshadow.jpg" alt="makeup">
           <div class="container">
             <h2 class="buy_item">Eyeshadow</h2>
             <p class="title" id="eye-price">$50</p>
@@ -56,7 +57,7 @@
 
       <div class="column">
         <div class="card">
-          <img src="images/mkup1.jpg" alt="makeup" style="width:100%" height="400px">
+          <img src="images/concelar.jpg" alt="makeup">
           <div class="container">
             <h2 class="buy_item">Concealer</h2>
             <p class="title" id="concelar-price">$35</p>
@@ -73,7 +74,7 @@
 
       <div class="column">
         <div class="card">
-          <img src="images/mkup3.jpg" alt="toy" style="width:100%" height="400px">
+          <img src="images/lipstick.jpg" alt="toy">
           <div class="container">
             <h2 class="buy_item">Lipstick</h2>
             <p class="title" id="lipstick-price">$40</p>
@@ -89,7 +90,7 @@
       </div>
       <div class="column">
         <div class="card">
-          <img src="images/mkup6.jpg" alt="toy" style="width:100%" height="400px">
+          <img src="images/setting powder.webp" alt="toy">
           <div class="container">
             <h2 class="buy_item">Powder</h2>
             <p class="title" id="powder-price">$55</p>
@@ -105,7 +106,7 @@
       </div>
       <div class="column">
         <div class="card">
-          <img src="images/mkup2.jpg" alt="toy" style="width:100%" height="400px">
+          <img src="images/mascara.jpg" alt="toy">
           <div class="container">
             <h2 class="buy_item">Mascara</h2>
             <p class="title" id="mascara-price">$547</p>
@@ -123,104 +124,113 @@
 
   </div>
   </div>
-
-  <div>
-    <h2 style="text-align: center;">BASKET</h2>
-  </div>
-  <div id="pay-details-cont">
-    <form action="" id="payForm">
-      <input type="radio" name="visamaster" id="visa" value="visa">
-      <label for="visa">Visa</label>
-      <input type="radio" name="visamaster" id="master" value="master">
-      <label for="visa">master</label>
-      <p>
-        <label for="cardName1"> Name on card</label>
-        <input type="text" name="" id="cardnameN1" maxlength="15">
-      
-        <input type="text" name="" id="cardnameN2" maxlength="15">
-      
-        <input type="text" name="" id="cardnameN3" maxlength="15">
-      </p>
-      <p>
-        <label for="expiry">Expiry Date</label>
-        Month:
-        <select name="" id="month">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">5</option>
-          <option value="4">6</option>
-          <option value="4">7</option>
-          <option value="4">8</option>
-          <option value="4">9</option>
-          <option value="4">10</option>
-          <option value="4">11</option>
-          <option value="4">12</option>
-        </select>
-        Year:
-        <select name="" id="year">
-          <option value="2023">2023</option>
-          <option value="2304">2036</option>
-          <option value="2015">2015</option>
-        </select>
-      </p>
-      <label for="cvv">CVV</label>
-      <!-- <input type="number" name="" id="cvv" min="100" max="999"> -->
-      <input type="text" inputmode="numeric" pattern="[0-9]*" id="cvvf">
-    </form>
-    <table id="items-totals">
-      <thead>
-        <tr>
-          <th>Items</th>
-          <th>Total</th>
-        </tr>
-        <tr>
-          <td>#<span id="qty"></span></td>
-          <td>$<span id="amount"></span></td>
-        </tr>
-      </thead>
-    </table>
+  <div class="basket-flex-wrapper">
     <div>
-      <button id="check-clear">Clear Cart</button>
-      <button onclick="validatePaymentForm()">Checkout</button>
+      <h2 style="text-align: center;">BASKET</h2>
     </div>
   </div>
-  <div id="cost-container">
-    <div class="product-price">
-      <table>
+  <div class="side-by-side-container">
+    <div id="pay-details-cont">
+      <form action="" id="payForm">
+        <input type="radio" name="visamaster" id="visa" value="visa">
+        <label for="visa">Visa</label>
+        <input type="radio" name="visamaster" id="master" value="master">
+        <label for="visa">master</label>
+        <p>
+          <label for="cardName1"> Name on card</label>
+          <input type="text" name="" id="cardnameN1" maxlength="15">
+        
+          <input type="text" name="" id="cardnameN2" maxlength="15">
+        
+          <input type="text" name="" id="cardnameN3" maxlength="15">
+        </p>
+        <div class="input-section">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" placeholder="1234 5678 1234 5678" maxlength="19" oninput="formatCardNumber(this)">
+        </div>
+        <p>
+          <label for="expiry">Expiry Date</label>
+          Month:
+          <select name="" id="month">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">5</option>
+            <option value="4">6</option>
+            <option value="4">7</option>
+            <option value="4">8</option>
+            <option value="4">9</option>
+            <option value="4">10</option>
+            <option value="4">11</option>
+            <option value="4">12</option>
+          </select>
+          Year:
+          <select name="" id="year">
+            <option value="2023">2023</option>
+            <option value="2304">2036</option>
+            <option value="2015">2015</option>
+          </select>
+        </p>
+        <label for="cvv">CVV</label>
+        <!-- <input type="number" name="" id="cvv" min="100" max="999"> -->
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="cvvf">
+      </form>
+      <table id="items-totals">
         <thead>
           <tr>
-            <th>Product</th>
-            <th>Price</th>
+            <th>Items</th>
+            <th>Total</th>
+          </tr>
+          <tr>
+            <td>#<span id="qty"></span></td>
+            <td>$<span id="amount"></span></td>
           </tr>
         </thead>
-        <tbody id="items-total">
-
-        </tbody>
       </table>
+      <div>
+        <button id="check-clear">Clear Cart</button>
+        <button onclick="validatePaymentForm()">Checkout</button>
+      </div>
     </div>
-    <div id="costForm" hidden>
-      <table>
-
-        <tr>
-          <th>Total Cost</th>
-          <td id="total-cost"></td>
-        </tr>
-        <tr>
-          <th>Delivery Cost</th>
-          <td id="delivery-cost"></td>
-        </tr>
-        <tr>
-          <th>Net Total</th>
-          <td id="net-total"></td>
-        </tr>
-      </table>
+    <div id="cost-container">
+      <div class="product-price">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody id="items-total">
+  
+          </tbody>
+        </table>
+      </div>
+      <div id="costForm" hidden>
+        <table>
+  
+          <tr>
+            <th>Total Cost</th>
+            <td id="total-cost"></td>
+          </tr>
+          <tr>
+            <th>Delivery Cost</th>
+            <td id="delivery-cost"></td>
+          </tr>
+          <tr>
+            <th>Net Total</th>
+            <td id="net-total"></td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
-
-  </div>
-  </div>
-  </div>
+  
+    </div>
+    </div>
+    </div>
+  
+  
+  
   <script src="cart.js"></script>
 </body>
 
