@@ -122,8 +122,6 @@ function clearBucketList() {
   }
 }
 
-
-
 // this function is for the eyeshadow description and price
 
 function changeFunction() {
@@ -227,14 +225,36 @@ function validateForm() {
   var name = document.getElementById("name").value;
   var surname = document.getElementById("surname").value;
   var comments = document.getElementById("comments").value;
+  var nameRegex = /^[A-Za-z]+$/;
   if (name == "" || surname == "" || comments == "") {
     alert("Please fill out all of the fields.");
+    return false;
+  }
+  if (!nameRegex.test(name) || !nameRegex.test(surname)) {
+    alert("Names must contain only letters (no numbers or symbols).");
+    return false;
+  }
+   else {
+    alert("Thank you for submitting your additional comments");
+    return true;
+  }
+}
+// this function is to validate that the right info has been entered in the contact form for example not entering numbers in the name, surname field
+function validateContactForm() {
+  var name = document.getElementById("name").value;
+  var surname = document.getElementById("surname").value;
+  var nameRegex = /^[A-Za-z]+$/;
+
+  if (!nameRegex.test(name) || !nameRegex.test(surname)) {
+    alert("Names must contain only letters (no numbers or symbols).");
     return false;
   } else {
     alert("Thank you for submitting your additional comments");
     return true;
   }
 }
+
+
 
 // this function is for validating the payment form
 function validatePaymentForm() {
@@ -328,4 +348,43 @@ function clearPaymentInputs() {
   document.getElementById("cardnameN3").value = "";
   document.getElementById("year").value = "";
   document.getElementById("cvvf").value = "";
+}
+// this function is for getting the weather information
+async function getWeather() {
+  const city = document.getElementById('cityInput').value;
+  const apiKey = '574f8f58feca2725ca0dfab25bd5ec81'; 
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.cod === 200) {
+          document.getElementById('weatherResult').style.display = 'block';
+          document.getElementById('cityName').innerText = data.name;
+          document.getElementById('temp').innerText = Math.round(data.main.temp) + "°C";
+          
+          // --- NEW SUGGESTION LOGIC ---
+          const weatherMain = data.weather[0].main; // e.g., "Clear", "Rain", "Clouds"
+          const temp = data.main.temp;
+          let tip = "";
+
+          if (weatherMain === "Clear") {
+              tip = "☀️ It's sunny! Don't forget your SPF 50 Foundation and Lip Balm.";
+          } else if (weatherMain === "Rain") {
+              tip = "🌧️ Rainy day! We recommend our Waterproof Mascara and Eyeliner.";
+          } else if (temp < 15) {
+              tip = "❄️ Cold weather! Use a Hydrating Primer to prevent dry skin.";
+          } else if (temp > 25) {
+              tip = "🔥 It's hot! Use a Matte Setting Spray to keep your makeup in place.";
+          } else {
+              tip = "✨ Perfect weather! Any of our Premium Lipsticks would look great today.";
+          }
+
+          document.getElementById('suggestionText').innerText = tip;
+          // ----------------------------
+      }
+  } catch (error) {
+      console.error("Error:", error);
+  }
 }

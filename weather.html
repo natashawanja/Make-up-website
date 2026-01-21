@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="home.css">
+    <title>Weather page</title>
+</head>
+<body>
+    <!-- This is the navbar -->
+    <nav class="navbar-nav">
+        <div class="nav">
+            <div class="logo-container">
+                <img src="images/makeup-logo.png" alt="Logo" class="logo-img">
+            </div>
+            <div class="nav-items">
+                <a href="index.html"><img src="images/home3.png" alt="Home"></a>
+                <a href="items.html"><img src="images/products.png" alt="Products"></a>
+                <a href="productmenu.html"><img src="images/carts.png" alt="Cart"></a>
+                <a href="contactus.html"><img src="images/email.png" alt="Contact"></a>
+                <a href="weather.html"><img src="images/weather.png" alt="Weather"></a>
+            </div>
+        </div>
+    </nav>
+
+   <!-- This is the weather app code -->
+    <div class="weather-wrapper">
+        <h2>Check the Weather and find out if you should apply your Sun screen today</h2>
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Enter city name...">
+            <!-- This code calls the getWeather function when the button is clicked -->
+            <button onclick="getWeather()">Search</button>
+        </div>
+        <!-- This is the weather result card that displays the weather information -->
+        <div id="weatherResult" class="weather-card" style="display:none;">
+            <h3 id="cityName"></h3>
+            <p id="description"></p>
+            <h1 id="temp"></h1>
+            <p id="humidity"></p>
+        </div>
+    </div>
+   
+    
+    <script src="cart.js"></script>
+</body>
+</html>
