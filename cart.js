@@ -117,51 +117,63 @@ function forwardFunction() { updateProductDetails("mascara", "mascara-price", "m
 function validatePaymentForm() {
     const visa = document.getElementById("visa");
     const master = document.getElementById("master");
-    if (!visa || !master) return; // Exit if not on checkout page
+    if (!visa || !master) return; 
 
+    // Get Name Values
+    var name1 = document.getElementById("cardnameN1").value;
+    var name2 = document.getElementById("cardnameN2").value;
+    var name3 = document.getElementById("cardnameN3").value;
+    
     var cardNum = document.getElementById("cardNumber").value;
     var cvv = document.getElementById("cvvf").value;
 
-    if ((!visa.checked && !master.checked) || cardNum == "" || cvv == "") {
-        alert("Please fill in all details");
+    // 1. Check if empty
+    if ((!visa.checked && !master.checked) || cardNum == "" || cvv == "" || name1 == "") {
+        alert("Please fill in all details, including the name.");
         return;
     }
 
-    if (cardNum.length < 16) {
+    // 2. Validate Name (Only letters allowed)
+    // This regex checks if the string contains only A-Z or a-z
+    var lettersOnly = /^[A-Za-z]+$/;
+    if (!name1.match(lettersOnly) || (name2 !== "" && !name2.match(lettersOnly)) || (name3 !== "" && !name3.match(lettersOnly))) {
+        alert("The name fields must only contain letters (no numbers or symbols).");
+        return;
+    }
+
+    // validate Card Number (16 digits with spaces so 19 characters)
+    if (cardNum.length < 19) {
         alert("Card number must be 16 digits");
         return;
     }
 
+    // 4. Validate CVV
     if (/^\d{3}$/.test(cvv)) {
         var cost_form = document.getElementById("costForm");
         if (cost_form) cost_form.style.display = "block";
         
         var totalCst = parseFloat(document.getElementById("amount").textContent);
-        var deliveryC = 0;
-        var netTotal = 0;
+        var deliveryC = totalCst < 1000 ? totalCst * 0.1 : 0;
+        var netTotal = totalCst + deliveryC;
 
-        // DELIVERY CALCULATION LOGIC
-        if (totalCst < 1000) {
-            deliveryC = totalCst * 0.1; // 10% Delivery
-        } else {
-            deliveryC = 0; // Free Delivery
-        }
-
-        netTotal = totalCst + deliveryC;
-
-        // Display results
-        const delElem = document.getElementById("delivery-cost");
-        const netElem = document.getElementById("net-total");
-        const totElem = document.getElementById("total-cost");
-
-        if (totElem) totElem.innerHTML = totalCst.toFixed(2);
-        if (delElem) delElem.innerHTML = deliveryC.toFixed(2);
-        if (netElem) netElem.innerHTML = netTotal.toFixed(2);
+        if (document.getElementById("total-cost")) document.getElementById("total-cost").innerHTML = totalCst.toFixed(2);
+        if (document.getElementById("delivery-cost")) document.getElementById("delivery-cost").innerHTML = deliveryC.toFixed(2);
+        if (document.getElementById("net-total")) document.getElementById("net-total").innerHTML = netTotal.toFixed(2);
 
         setTimeout(() => { confirmPayment(); }, 1000);
     } else {
         alert("CVV must be 3 digits");
     }
+}
+function formatCardNumber(input) {
+    // Remove all non-digits (including existing spaces)
+    let value = input.value.replace(/\D/g, '');
+    
+    // Add a space after every 4 digits
+    let formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+    
+    // Update the input field with the formatted string
+    input.value = formattedValue;
 }
 
 function confirmPayment() {
@@ -169,6 +181,10 @@ function confirmPayment() {
     if (isConfirmed) {
         alert("Thank you for the confirmation");
         clearBucketList();
+        const paymentForm = document.getElementById("payForm");
+        if (paymentForm) {
+            paymentForm.reset(); 
+        }
         document.getElementById("costForm").style.display = "none";
     }
 }
