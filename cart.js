@@ -199,7 +199,41 @@ function confirmPayment() {
     }
 }
 
-// --- WEATHER API LOGIC (Contact Page) ---
+// --- CONTACT FORM LOGIC WITH VALIDATION ---
+function validateForm() {
+    // 1. Get the elements
+    const name = document.getElementById("name").value.trim();
+    const surname = document.getElementById("surname").value.trim();
+    const comments = document.getElementById("comments").value.trim();
+    
+    // 2. Define the Regex (A-Z and a-z only)
+    const lettersOnly = /^[A-Za-z\s]+$/;
+
+    // 3. Validation Checks
+    if (name === "" || surname === "" || comments === "") {
+        alert("All fields are required.");
+        return false;
+    }
+
+    if (!name.match(lettersOnly)) {
+        alert("Please enter a valid Name (letters only).");
+        return false;
+    }
+
+    if (!surname.match(lettersOnly)) {
+        alert("Please enter a valid Surname (letters only).");
+        return false;
+    }
+
+    // 4. Success Actions
+    alert("Thank you, " + name + " " + surname + "! Your message has been received.");
+    
+    // Reset form and prevent page reload
+    document.getElementById("contactForm").reset();
+    return false;
+}
+
+// --- WEATHER API LOGIC  ---
 async function getWeather() {
   const cityInput = document.getElementById('cityInput');
   if (!cityInput) return; // Prevents errors on pages without the weather input
