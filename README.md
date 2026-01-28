@@ -1,2 +1,3 @@
 # Makeup website
-This a makeup website
+## This a makeup website
+I have created a 5-page Makeup ecommerce website. I have designed it in a way that revolutionizes how users shop for all sorts of makeup products. The website displays what the e-commerce is about, they are also able to see the products that are being sold. In the next page users have the choice to select from either Revlon, Mac, or Sleek brands for each of the products sold, and each brand has its own price. There is also a delivery fee that is incurred when the total cost is less than $1000, the user is charge 10% of their total cost. There is also a contact form to fill in case the customers would like to contact the shop. And finally, I have consumed a Weather API that displays the weather of a city.
