@@ -7,45 +7,49 @@ const clearBtn = document.getElementById("check-clear");
 if (clearBtn) {
     clearBtn.addEventListener("click", clearBucketList);
 }
-
+//  This function adds event listeners to all buy now buttons
 var buyButton = document.getElementsByClassName("buyNow");
 for (var btn = 0; btn < buyButton.length; btn++) {
     buyButton[btn].addEventListener("click", function () { bucketBuyNow(this); });
 }
 
+// This function adds the selected item to the bucket list in session storage
 function bucketBuyNow(para) {
     var bucketList = [];
     var bucketListStr;
     var prices = "";
     var goods = "";
-
+    // This loop goes through the previous siblings
+    //  of the clicked button to find the price and item name
     while (para = para.previousSibling) {
         if (para.nodeType === 5) continue;
         if (para.className == "title") { prices = para.innerText; }
         if (para.className == "buy_item") { goods = para.innerText; }
     }
-
+    // This creates an object to hold the item name and price
     var goods_item = { item_name: goods, cost: prices };
     var product_item = JSON.stringify(goods_item);
 
+    // This checks if there is already a bucket list in session storage
     if (!sessionStorage.getItem("bucketList")) {
         bucketList.push(product_item);
     } else {
         bucketList = JSON.parse(sessionStorage.getItem('bucketList'));
         bucketList.push(product_item);
     }
-
+    // This saves the updated bucket list back to session storage
     bucketListStr = JSON.stringify(bucketList);
     sessionStorage.setItem('bucketList', bucketListStr);
     bucketConfirmAdd(goods);
     bucketListUpdate();
 }
 
+// This function updates the bucket list display
 function bucketListUpdate() {
     var sum = 0;
     var items = 0;
     var items_total = "";
-
+    // This checks if there is a bucket list in session storage
     if (sessionStorage.getItem('bucketList')) {
         var bucket = JSON.parse(sessionStorage.getItem('bucketList'));
         items = bucket.length;
@@ -56,17 +60,18 @@ function bucketListUpdate() {
             sum += cost;
         }
     }
-
+    // This updates the bucket list table body
     // SAFE UPDATE: Only update if elements exist on the current page
     const amtElem = document.getElementById("amount");
     const listElem = document.getElementById("items-total");
     const qtyElem = document.getElementById("qty");
-
+    // This updates the inner HTML of the elements if they exist
     if (amtElem) amtElem.innerHTML = sum.toFixed(2);
     if (listElem) listElem.innerHTML = items_total;
     if (qtyElem) qtyElem.innerHTML = items;
 }
 
+// This function shows a confirmation message when an item is added
 function bucketConfirmAdd(makeup_name) {
     var notification = document.getElementById("notification");
     if (notification) {
@@ -77,6 +82,7 @@ function bucketConfirmAdd(makeup_name) {
     }
 }
 
+// This function clears the bucket list from session storage
 function clearBucketList() {
     if (sessionStorage.getItem('bucketList')) {
         sessionStorage.removeItem('bucketList');
@@ -88,25 +94,26 @@ function clearBucketList() {
         }
     }
 }
-
+// This function runs on page load to update the bucket list display
 // --- BRAND SELECTION LOGIC (Product Menu Page) ---
 function updateProductDetails(brandId, priceId, descId) {
     const brand = document.getElementById(brandId);
+    // This check prevents errors on pages without the brand select element
     if (!brand) return; // Exit if not on the menu page
 
     let val = brand.value;
     let p = "", d = "";
-
+    // This sets price and description based on selected brand
     if (val === "revlon") { p = "$50"; d = "This a premium brand"; }
     else if (val === "mac") { p = "$65"; d = "This is a lovely brand"; }
     else if (val === "sleek") { p = "$78"; d = "This is a beautiful brand"; }
-
+    // This updates the price and description elements
     const pElem = document.getElementById(priceId);
     const dElem = document.getElementById(descId);
     if (pElem) pElem.innerHTML = p;
     if (dElem) dElem.innerHTML = d;
 }
-
+// this fuctions are called on change event of respective select elements
 function changeFunction() { updateProductDetails("eyeshadow", "eye-price", "eye-descrption"); }
 function replaceFunction() { updateProductDetails("concelar", "concelar-price", "concelar-description"); }
 function moveFunction() { updateProductDetails("lipstick", "lipstick-price", "lipstick-description"); }
@@ -115,11 +122,12 @@ function forwardFunction() { updateProductDetails("mascara", "mascara-price", "m
 
 // --- PAYMENT VALIDATION & DELIVERY LOGIC (Checkout Page) ---
 function validatePaymentForm() {
+    // This check prevents errors on pages without the payment form
     const visa = document.getElementById("visa");
     const master = document.getElementById("master");
     if (!visa || !master) return; 
 
-    // Get Name Values
+    // This gets the values from the form fields
     var name1 = document.getElementById("cardnameN1").value;
     var name2 = document.getElementById("cardnameN2").value;
     var name3 = document.getElementById("cardnameN3").value;
@@ -151,7 +159,7 @@ function validatePaymentForm() {
     if (/^\d{3}$/.test(cvv)) {
         var cost_form = document.getElementById("costForm");
         if (cost_form) cost_form.style.display = "block";
-        
+        // This calculates delivery cost and net total
         var totalCst = parseFloat(document.getElementById("amount").textContent);
         var deliveryC = totalCst < 1000 ? totalCst * 0.1 : 0;
         var netTotal = totalCst + deliveryC;
@@ -165,6 +173,7 @@ function validatePaymentForm() {
         alert("CVV must be 3 digits");
     }
 }
+// this function formats the card number input with spaces every 4 digits
 function formatCardNumber(input) {
     // Remove all non-digits (including existing spaces)
     let value = input.value.replace(/\D/g, '');
@@ -176,6 +185,7 @@ function formatCardNumber(input) {
     input.value = formattedValue;
 }
 
+// This function confirms the payment and clears the bucket list
 function confirmPayment() {
     var isConfirmed = confirm("Do you accept the total payment calculation?");
     if (isConfirmed) {
@@ -193,11 +203,11 @@ function confirmPayment() {
 async function getWeather() {
   const cityInput = document.getElementById('cityInput');
   if (!cityInput) return; // Prevents errors on pages without the weather input
-  
+  // Gets the city name from the input field
   const city = cityInput.value;
   const apiKey = '574f8f58feca2725ca0dfab25bd5ec81'; 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-
+    // Fetches weather data from the API
   try {
       const response = await fetch(url);
       const data = await response.json();

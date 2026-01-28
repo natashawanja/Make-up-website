@@ -963,6 +963,8 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+/* Responsive Styles for each screen size */
 /* Optional: Adjust height for mobile devices */
 @media (max-width: 768px) {
     .pic {
