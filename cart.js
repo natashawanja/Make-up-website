@@ -44,7 +44,7 @@ function bucketBuyNow(para) {
     bucketListUpdate();
 }
 
-// This function updates the bucket list display
+// This checks if the items added exist on page load and updates the bucket list display
 function bucketListUpdate() {
     var sum = 0;
     var items = 0;
