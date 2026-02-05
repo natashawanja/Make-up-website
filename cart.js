@@ -15,10 +15,14 @@ for (var btn = 0; btn < buyButton.length; btn++) {
 
 // This function adds the selected item to the bucket list in session storage
 function bucketBuyNow(para) {
+    // var is used to store the previous sibling element of the clicked button
     var bucketList = [];
+    // this is used to store the stringified version of the bucket 
+    // list for storage in session storage
     var bucketListStr;
     var prices = "";
     var goods = "";
+
     // This loop goes through the previous siblings
     //  of the clicked button to find the price and item name
     while (para = para.previousSibling) {
@@ -30,9 +34,11 @@ function bucketBuyNow(para) {
     var goods_item = { item_name: goods, cost: prices };
     var product_item = JSON.stringify(goods_item);
 
-    // This checks if there is already a bucket list in session storage
+    // This checks if there is already data 
+    // in session storage for the bucket list and updates it accordingly
     if (!sessionStorage.getItem("bucketList")) {
         bucketList.push(product_item);
+        // This saves the bucket list to session storage as a string
     } else {
         bucketList = JSON.parse(sessionStorage.getItem('bucketList'));
         bucketList.push(product_item);
@@ -53,6 +59,8 @@ function bucketListUpdate() {
     if (sessionStorage.getItem('bucketList')) {
         var bucket = JSON.parse(sessionStorage.getItem('bucketList'));
         items = bucket.length;
+        // this loop goes through the bucket list 
+        // and calculates the total cost and creates the HTML for the bucket list table
         for (var j = 0; j < items; j++) {
             var bkt = JSON.parse(bucket[j]);
             var cost = parseFloat(bkt.cost.split('$')[1]);
@@ -156,6 +164,7 @@ function validatePaymentForm() {
     }
 
     // 4. Validate CVV
+    // this regex checks if the CVV is exactly 3 digits (0-9)
     if (/^\d{3}$/.test(cvv)) {
         var cost_form = document.getElementById("costForm");
         if (cost_form) cost_form.style.display = "block";
@@ -245,10 +254,11 @@ async function getWeather() {
   try {
       const response = await fetch(url);
       const data = await response.json();
-
+        // this checks if the API returned 
+        // a successful response (code 200) before updating the UI
       if (data.cod === 200) {
           const resDiv = document.getElementById('weatherResult');
-          if (resDiv) resDiv.style.display = 'block'; // Shows the card
+          if (resDiv) resDiv.style.display = 'block'; // this shows the weather result section if it's hidden
           
           // Updates only the core weather details
           document.getElementById('cityName').innerText = data.name;
